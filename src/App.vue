@@ -1,9 +1,9 @@
 <template>
-  <div class="h-screen flex items-center justify-center flex-col">
+  <div class="w-3/5 m-auto h-screen flex items-center justify-center flex-col">
     <button class="btn btn-primary" @click="toggleMicrophone" ref="recordBtn">start recording</button>
 
     <!-- Transcript -->
-    <div class="transcript" v-text="transcript"></div>
+    <div class="transcript my-4 font-bold text-justify" v-text="transcript"></div>
   </div>
 </template>
 

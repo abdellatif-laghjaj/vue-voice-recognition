@@ -1,6 +1,6 @@
 <template>
   <div class="w-3/5 m-auto h-screen flex items-center justify-center flex-col">
-    <button class="btn btn-primary" @click="toggleMicrophone" ref="recordBtn">start recording</button>
+    <button class="btn btn-success" @click="ToggleMic" ref="recordBtn">start recording</button>
 
     <!-- Transcript -->
     <div class="transcript my-4 font-bold text-justify" v-text="transcript"></div>
@@ -13,45 +13,55 @@ import { onMounted, ref } from 'vue';
 const transcript = ref('')
 const isRecording = ref(false)
 const Regoognition = window.SpeechRecognition || window.webkitSpeechRecognition
-const speachRecognition = new Regoognition()
+const sr = new Regoognition()
 const recordBtn = ref(null)
 
 
-const toggleMicrophone = () => {
+onMounted(() => {
+  sr.continuous = true
+  sr.interimResults = true
+  sr.onstart = () => {
+    console.log('SR Started')
+    isRecording.value = true
+  }
+  sr.onend = () => {
+    console.log('SR Stopped')
+    isRecording.value = false
+  }
+  sr.onresult = (evt) => {
+    for (let i = 0; i < evt.results.length; i++) {
+      const result = evt.results[i]
+      if (result.isFinal) CheckForCommand(result)
+    }
+    const t = Array.from(evt.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join('')
+
+    transcript.value = t
+  }
+})
+const CheckForCommand = (result) => {
+  const t = result[0].transcript;
+  if (t.includes('stop recording')) {
+    sr.stop()
+  } else if (
+    t.includes('what is the time') ||
+    t.includes('what\'s the time')
+  ) {
+    sr.stop()
+    alert(new Date().toLocaleTimeString())
+    setTimeout(() => sr.start(), 100)
+  }
+}
+const ToggleMic = () => {
   if (isRecording.value) {
-    speachRecognition.stop()
-    recordBtn.value.innerText = 'start recording'
+    sr.stop()
   } else {
-    speachRecognition.start()
-    recordBtn.value.innerText = 'recording...'
+    sr.start()
   }
 }
 
-onMounted(() => {
-  speachRecognition.continuous = true
-  speachRecognition.interimResults = true
-
-  // Start recording
-  speachRecognition.onstart = () => {
-    console.log('speach recognition started')
-    isRecording.value = true
-  }
-
-  // Stop recording
-  speachRecognition.onend = () => {
-    console.log('speach recognition stopped')
-    isRecording.value = false
-  }
-
-  // Get transcript
-  speachRecognition.onresult = (event) => {
-    const transcript = Array.from(event.results)
-      .map((result) => result[0])
-      .map((result) => result.transcript)
-      .join('')
-    transcript.value = transcript
-  }
-})
 </script>
 
 <style>

@@ -4,17 +4,35 @@
 
     <!-- Transcript -->
     <div class="transcript my-4 font-bold text-justify" v-text="transcript"></div>
+
+    <!-- Modal -->
+    <!-- The button to open modal -->
+    <label for="my-modal" class="btn modal-button hidden" ref="modalBtn">open modal</label>
+
+    <!-- Put this part before </body> tag -->
+    <input type="checkbox" id="my-modal" class="modal-toggle" />
+    <div class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">Speach Recognition</h3>
+        <p class="py-4">{{ message }}</p>
+        <div class="modal-action">
+          <label for="my-modal" class="btn">Yay!</label>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
 
+const message = ref('')
 const transcript = ref('')
 const isRecording = ref(false)
 const Regoognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const sr = new Regoognition()
 const recordBtn = ref(null)
+const modalBtn = ref(null)
 
 
 onMounted(() => {
@@ -46,19 +64,30 @@ const CheckForCommand = (result) => {
   if (t.includes('stop recording')) {
     sr.stop()
   } else if (
-    t.includes('what is the time') ||
-    t.includes('what\'s the time')
-  ) {
+    t.includes('what is the time') || t.includes('what\'s the time')) {
     sr.stop()
-    alert(new Date().toLocaleTimeString())
+    message.value = 'The time is ' + new Date().toLocaleTimeString()
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is today\'s date') 
+        || t.includes('what\'s today\'s date') 
+        || t.includes('what is the date)')
+        || t.includes('what\'s the date')) {
+    sr.stop()
+    message.value = 'Today is ' + new Date().toLocaleDateString()
+    modalBtn.value.click()
     setTimeout(() => sr.start(), 100)
   }
 }
 const ToggleMic = () => {
   if (isRecording.value) {
     sr.stop()
+    recordBtn.value.innerText = 'start recording'
+    recordBtn.value.classList.replace('btn-error', 'btn-success')
   } else {
     sr.start()
+    recordBtn.value.innerText = 'stop recording'
+    recordBtn.value.classList.replace('btn-success', 'btn-error')
   }
 }
 

@@ -1,14 +1,17 @@
 <template>
-  <button class="btn">Button</button>
-<button class="btn btn-primary">Button</button>
-<button class="btn btn-secondary">Button</button>
-<button class="btn btn-accent">Button</button>
-<button class="btn btn-ghost">Button</button>
-<button class="btn btn-link">Button</button>
+  <div class="h-screen flex items-center justify-center flex-col">
+    <button class="btn btn-primary">start recording</button>
+  </div>
 </template>
 
 <script setup>
 </script>
 
-<style scoped>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
+
+*{
+  font-family: 'Poppins', sans-serif;
+}
+
 </style>

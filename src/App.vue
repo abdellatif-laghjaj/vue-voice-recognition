@@ -1,43 +1,63 @@
 <template>
   <div class="h-screen flex items-center justify-center flex-col">
-    <button class="btn btn-primary">start recording</button>
+    <button class="btn btn-primary" @click="toggleMicrophone" ref="recordBtn">start recording</button>
 
     <!-- Transcript -->
-    <div class="transcript"></div>
+    <div class="transcript" v-text="transcript"></div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
 
-  const transcript = ref('')
-  const isRecording = ref(false)  
-  const Regoognition = window.SpeechRecognition || window.webkitSpeechRecognition
-  const speachRecognition = new Regoognition()    
+const transcript = ref('')
+const isRecording = ref(false)
+const Regoognition = window.SpeechRecognition || window.webkitSpeechRecognition
+const speachRecognition = new Regoognition()
+const recordBtn = ref(null)
 
-  onMounted(() =>{
-    speachRecognition.continuous = true
-    speachRecognition.interimResults = true
 
-    // Start recording
-    speachRecognition.onstart = () => {
-      console.log('speach recognition started')
-      isRecording.value = true
-    }
+const toggleMicrophone = () => {
+  if (isRecording.value) {
+    speachRecognition.stop()
+    recordBtn.value.innerText = 'start recording'
+  } else {
+    speachRecognition.start()
+    recordBtn.value.innerText = 'recording...'
+  }
+}
 
-    // Stop recording
-    speachRecognition.onend = () => {
-      console.log('speach recognition stopped')
-      isRecording.value = false
-    }
-  })
+onMounted(() => {
+  speachRecognition.continuous = true
+  speachRecognition.interimResults = true
+
+  // Start recording
+  speachRecognition.onstart = () => {
+    console.log('speach recognition started')
+    isRecording.value = true
+  }
+
+  // Stop recording
+  speachRecognition.onend = () => {
+    console.log('speach recognition stopped')
+    isRecording.value = false
+  }
+
+  // Get transcript
+  speachRecognition.onresult = (event) => {
+    const transcript = Array.from(event.results)
+      .map((result) => result[0])
+      .map((result) => result.transcript)
+      .join('')
+    transcript.value = transcript
+  }
+})
 </script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
 
-*{
+* {
   font-family: 'Poppins', sans-serif;
 }
-
 </style>

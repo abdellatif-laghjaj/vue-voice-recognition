@@ -11,19 +11,21 @@
 
 
     <!-- Recording -->
-    <button class="btn btn-success" @click="ToggleMic" ref="recordBtn">
-      <div class="recording-circle" v-if="isRecording"></div>
-      <div ref="recordBtnText">start recording</div>
-    </button>
+    <div class="flex items-center justify-center gap-2">
+      <button class="btn btn-success" @click="ToggleMic" ref="recordBtn">
+        <div class="recording-circle" v-if="isRecording"></div>
+        <div ref="recordBtnText">start recording</div>
+      </button>
+      <button class="btn btn-square btn-outline" @click="CopyToClipboard" v-if="transcript">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+          <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
+        </svg>
+      </button>
+    </div>
 
     <!-- Transcript -->
     <div class="transcript my-4 font-bold text-justify" v-text="transcript"></div>
-    <button class="btn btn-square btn-outline" @click="CopyToClipboard" v-if="transcript">
-      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
-        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
-      </svg>
-    </button>
 
     <!-- Modal -->
     <!-- The button to open modal -->
@@ -84,12 +86,12 @@ onMounted(() => {
 //copy to clipboard
 const CopyToClipboard = () => {
   const text = transcript.value;
-  
+
   if (text === "") return;
 
   navigator.clipboard.writeText(text);
   copied.value = true
-  
+
   setTimeout(() => {
     copied.value = false
   }, 3000);

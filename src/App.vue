@@ -69,12 +69,154 @@ const CheckForCommand = (result) => {
     message.value = 'The time is ' + new Date().toLocaleTimeString()
     modalBtn.value.click()
     setTimeout(() => sr.start(), 100)
-  } else if (t.includes('what is today\'s date') 
-        || t.includes('what\'s today\'s date') 
-        || t.includes('what is the date)')
-        || t.includes('what\'s the date')) {
+  } else if (t.includes('what is today\'s date')
+    || t.includes('what\'s today\'s date')
+    || t.includes('what is the date)')
+    || t.includes('what\'s the date')) {
     sr.stop()
     message.value = 'Today is ' + new Date().toLocaleDateString()
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('open google')) {
+    sr.stop()
+    window.open('https://google.com', '_blank')
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('open youtube')) {
+    sr.stop()
+    window.open('https://youtube.com', '_blank')
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('open facebook')) {
+    sr.stop()
+    window.open('https://facebook.com', '_blank')
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('open twitter')) {
+    sr.stop()
+    window.open('https://twitter.com', '_blank')
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('open instagram')) {
+    sr.stop()
+    window.open('https://instagram.com', '_blank')
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('open github')) {
+    sr.stop()
+    window.open('https://github.com', '_blank')
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('open stackoverflow')) {
+    sr.stop()
+    window.open('https://stackoverflow.com', '_blank')
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('open codepen')) {
+    sr.stop()
+    window.open('https://codepen.io', '_blank')
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('how are you')) {
+    sr.stop()
+    message.value = 'I am fine, thank you'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your name')) {
+    sr.stop()
+    message.value = 'My name is Speach Recognition'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your age')) {
+    sr.stop()
+    message.value = 'I am 1 day old'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite color')) {
+    sr.stop()
+    message.value = 'My favorite color is blue'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite food')) {
+    sr.stop()
+    message.value = 'My favorite food is pizza'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite movie')) {
+    sr.stop()
+    message.value = 'My favorite movie is Avengers'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite song')) {
+    sr.stop()
+    message.value = 'My favorite song is Shape of you'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite book')) {
+    sr.stop()
+    message.value = 'My favorite book is Harry Potter'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite game')) {
+    sr.stop()
+    message.value = 'My favorite game is PUBG'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite sport')) {
+    sr.stop()
+    message.value = 'My favorite sport is Cricket'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite country')) {
+    sr.stop()
+    message.value = 'My favorite country is India'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite food')) {
+    sr.stop()
+    message.value = 'My favorite food is pizza'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite city')) {
+    sr.stop()
+    message.value = 'My favorite city is Mumbai'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite state')) {
+    sr.stop()
+    message.value = 'My favorite state is Maharashtra'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite place')) {
+    sr.stop()
+    message.value = 'My favorite place is Goa'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite animal')) {
+    sr.stop()
+    message.value = 'My favorite animal is Dog'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite bird')) {
+    sr.stop()
+    message.value = 'My favorite bird is Peacock'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite flower')) {
+    sr.stop()
+    message.value = 'My favorite flower is Rose'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite fruit')) {
+    sr.stop()
+    message.value = 'My favorite fruit is Apple'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite vegetable')) {
+    sr.stop()
+    message.value = 'My favorite vegetable is Potato'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite car')) {
+    sr.stop()
+    message.value = 'My favorite car is BMW'
+    modalBtn.value.click()
+    setTimeout(() => sr.start(), 100)
+  } else if (t.includes('what is your favorite bike')) {
+    sr.stop()
+    message.value = 'My favorite bike is Harley Davidson'
     modalBtn.value.click()
     setTimeout(() => sr.start(), 100)
   }

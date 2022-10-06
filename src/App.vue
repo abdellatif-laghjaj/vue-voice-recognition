@@ -1,5 +1,16 @@
 <template>
   <div class="w-3/5 m-auto h-screen flex items-center justify-center flex-col">
+    <!-- Toast -->
+    <div class="toast toast-top toast-start" v-if="copied">
+      <div class="alert alert-success">
+        <div>
+          <span>Text copied successfully!</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Recording -->
     <button class="btn btn-success" @click="ToggleMic" ref="recordBtn">
       <div class="recording-circle" v-if="isRecording"></div>
       <div ref="recordBtnText">start recording</div>
@@ -7,6 +18,12 @@
 
     <!-- Transcript -->
     <div class="transcript my-4 font-bold text-justify" v-text="transcript"></div>
+    <button class="btn btn-square btn-outline" @click="CopyToClipboard" v-if="transcript">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
+      </svg>
+    </button>
 
     <!-- Modal -->
     <!-- The button to open modal -->
@@ -37,6 +54,7 @@ const sr = new Regoognition();
 const recordBtn = ref(null);
 const recordBtnText = ref(null);
 const modalBtn = ref(null);
+const copied = ref(false);
 
 onMounted(() => {
   sr.continuous = true;
@@ -62,6 +80,21 @@ onMounted(() => {
     transcript.value = t;
   };
 });
+
+//copy to clipboard
+const CopyToClipboard = () => {
+  const text = transcript.value;
+  
+  if (text === "") return;
+
+  navigator.clipboard.writeText(text);
+  copied.value = true
+  
+  setTimeout(() => {
+    copied.value = false
+  }, 3000);
+}
+
 const CheckForCommand = (result) => {
   const t = result[0].transcript;
   if (t.includes("stop recording")) {
@@ -120,7 +153,7 @@ const CheckForCommand = (result) => {
     setTimeout(() => sr.start(), 500);
   } else if (t.includes("what is your name")) {
     sr.stop();
-    message.value = "My name is Speach Recognition";
+    message.value = "My name is AbdelX";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
   } else if (t.includes("what is your age")) {
@@ -128,99 +161,39 @@ const CheckForCommand = (result) => {
     message.value = "I am 1 day old";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite color")) {
+  } else if (t.includes("what is your favorite color") || t.includes("what's your favorite color")) {
     sr.stop();
     message.value = "My favorite color is blue";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite food")) {
+  } else if (t.includes("what is your favorite food") || t.includes("what's your favorite food")) {
     sr.stop();
     message.value = "My favorite food is pizza";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite movie")) {
+  } else if (t.includes("what is your favorite movie") || t.includes("what's your favorite movie")) {
     sr.stop();
-    message.value = "My favorite movie is Avengers";
+    message.value = "My favorite movie is The Matrix";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite song")) {
+  } else if (t.includes("what is your favorite song") || t.includes("what's your favorite song")) {
     sr.stop();
-    message.value = "My favorite song is Shape of you";
+    message.value = "My favorite song is The Scientist by Coldplay";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite book")) {
+  } else if (t.includes("what is your favorite book") || t.includes("what's your favorite book")) {
     sr.stop();
-    message.value = "My favorite book is Harry Potter";
+    message.value = "My favorite book is The Alchemist by Paulo Coelho";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite game")) {
+  } else if (t.includes("what is your favorite game") || t.includes("what's your favorite game")) {
     sr.stop();
-    message.value = "My favorite game is PUBG";
+    message.value = "My favorite game is GTA V";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite sport")) {
+  } else if (t.includes("what is your favorite sport") || t.includes("what's your favorite sport")) {
     sr.stop();
-    message.value = "My favorite sport is Cricket";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite country")) {
-    sr.stop();
-    message.value = "My favorite country is India";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite food")) {
-    sr.stop();
-    message.value = "My favorite food is pizza";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite city")) {
-    sr.stop();
-    message.value = "My favorite city is Mumbai";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite state")) {
-    sr.stop();
-    message.value = "My favorite state is Maharashtra";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite place")) {
-    sr.stop();
-    message.value = "My favorite place is Goa";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite animal")) {
-    sr.stop();
-    message.value = "My favorite animal is Dog";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite bird")) {
-    sr.stop();
-    message.value = "My favorite bird is Peacock";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite flower")) {
-    sr.stop();
-    message.value = "My favorite flower is Rose";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite fruit")) {
-    sr.stop();
-    message.value = "My favorite fruit is Apple";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite vegetable")) {
-    sr.stop();
-    message.value = "My favorite vegetable is Potato";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite car")) {
-    sr.stop();
-    message.value = "My favorite car is BMW";
-    modalBtn.value.click();
-    setTimeout(() => sr.start(), 500);
-  } else if (t.includes("what is your favorite bike")) {
-    sr.stop();
-    message.value = "My favorite bike is Harley Davidson";
+    message.value = "My favorite sport is Football";
     modalBtn.value.click();
     setTimeout(() => sr.start(), 500);
   }

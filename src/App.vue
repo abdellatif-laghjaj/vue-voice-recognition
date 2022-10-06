@@ -1,10 +1,36 @@
 <template>
   <div class="h-screen flex items-center justify-center flex-col">
     <button class="btn btn-primary">start recording</button>
+
+    <!-- Transcript -->
+    <div class="transcript"></div>
   </div>
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
+
+  const transcript = ref('')
+  const isRecording = ref(false)  
+  const Regoognition = window.SpeechRecognition || window.webkitSpeechRecognition
+  const speachRecognition = new Regoognition()    
+
+  onMounted(() =>{
+    speachRecognition.continuous = true
+    speachRecognition.interimResults = true
+
+    // Start recording
+    speachRecognition.onstart = () => {
+      console.log('speach recognition started')
+      isRecording.value = true
+    }
+
+    // Stop recording
+    speachRecognition.onend = () => {
+      console.log('speach recognition stopped')
+      isRecording.value = false
+    }
+  })
 </script>
 
 <style>
